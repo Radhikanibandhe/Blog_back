@@ -52,7 +52,7 @@ export class BlogController {
     return this.blogService.deleteBlog(id);
   }
 
-  @Patch('/:id')
+  @Post('/:id')
   updateBlog(
     @GetUser() user: UserEntity,
     @Param('id') id: string,

@@ -41,10 +41,12 @@ export class UserController {
     return this.userService.signin(authCredentialsDto);
   }
 
-  //update
-  @Patch('update')
+  @Patch('/:id')
   @UsePipes(ValidationPipe)
-  updateUser(@Body() signupCredentialsDto: SignupCredentialsDTO) {
-    return this.userService.updateUser(signupCredentialsDto);
+  updateUser(
+    @Param('id') id: string,
+    @Body() signupCredentialsDto: SignupCredentialsDTO,
+  ) {
+    return this.userService.updateUser(id,signupCredentialsDto);
   }
 }
