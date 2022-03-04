@@ -38,14 +38,22 @@ export class UserService {
     return { token };
   }
 
-  async updateUser(signupCredentialsDto: SignupCredentialsDTO) {
-    user.username = signupCredentialsDto.username;
-    user.password = `${crypto.MD5(signupCredentialsDto.password)}`;
-    user.firstname = signupCredentialsDto.firstname;
-    user.lastname = signupCredentialsDto.lastname;
-    user.country = signupCredentialsDto.country;
-    user.city = signupCredentialsDto.city;
-    user.email = signupCredentialsDto.email;
-    user.gender = signupCredentialsDto.gender;
+  async updateUser(id: string, signupCredentialsDto: SignupCredentialsDTO) {
+    const user = await this.userRepository.findOne(id);
+    if (user) {
+      user.username = signupCredentialsDto.username;
+      user.password = `${crypto.MD5(signupCredentialsDto.password)}`;
+      user.firstname = signupCredentialsDto.firstname;
+      user.lastname = signupCredentialsDto.lastname;
+      user.country = signupCredentialsDto.country;
+      user.city = signupCredentialsDto.city;
+      user.email = signupCredentialsDto.email;
+      user.gender = signupCredentialsDto.gender;
+
+      await user.save();
+      return user;
+    } else {
+      throw new NotFoundException('user not found');
+    }
   }
 }
