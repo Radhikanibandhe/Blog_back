@@ -8,7 +8,7 @@ export const TypeORMConfiguration: TypeOrmModuleOptions = {
   port: 3306,
   host: 'localhost',
   type: 'mysql',
-  database: 'blogsmanager',
+  database: 'blogs',
   synchronize: false,
   entities: [__dirname + '/../**/*.entity.{ts,js}'],
 };
