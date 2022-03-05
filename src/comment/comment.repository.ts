@@ -1,17 +1,17 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { CommentEntity } from './blog.comment.entity';
 import { CreateCommentDTO } from './dto/comment.create.dto';
-import { UserEntity } from 'src/user/user.entity';
+import { BlogEntity } from './../blog/blog.entity';
 
 @EntityRepository(CommentEntity)
 export class CommentRepository extends Repository<CommentEntity> {
   // create comment
-  async createComment(createCommentDto: CreateCommentDTO, user: UserEntity) {
+  async createComment(createCommentDto: CreateCommentDTO, blog: BlogEntity) {
     const comment = new CommentEntity();
     comment.comment = createCommentDto.comment;
-    comment.user = user;
+    comment.blog = blog;
     await comment.save();
-    delete comment.user;
+    delete comment.blog;
     return comment;
   }
 }

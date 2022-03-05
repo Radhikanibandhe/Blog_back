@@ -10,12 +10,12 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/user/get.user.decorator';
 import { CommentService } from './comment.service';
-import { UserEntity } from 'src/user/user.entity';
 import { CreateCommentDTO } from './dto/comment.create.dto';
 import { CommentEntity } from './blog.comment.entity';
 import { GetComment } from './get.comment.decorator';
+import { BlogEntity } from './../blog/blog.entity';
+import { GetBlog } from 'src/blog/get.blog.decorator';
 
 @Controller('comment')
 @UseGuards(AuthGuard())
@@ -25,10 +25,10 @@ export class CommentController {
   @Post()
   @UsePipes()
   createComment(
-    @GetUser() user: UserEntity,
+    @GetBlog() blog: BlogEntity,
     @Body() createCommentDto: CreateCommentDTO,
   ) {
-    return this.commentService.createComment(createCommentDto, user);
+    return this.commentService.createComment(createCommentDto, blog);
   }
 
   @UseGuards(AuthGuard())

@@ -45,11 +45,6 @@ export class UserEntity extends BaseEntity {
   @OneToMany((type) => BlogEntity, (blog) => blog.user, { eager: true })
   blogs: BlogEntity[];
 
-  @OneToMany((type) => CommentEntity, (comment) => comment.user, {
-    eager: true,
-  })
-  comments: CommentEntity;
-
   validatePassword(password: string) {
     const encrypted = `${crypto.MD5(password)}`;
     return encrypted == this.password;
