@@ -9,6 +9,7 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { BlogEntity } from 'src/blog/blog.entity';
 
 @Entity('comment')
 export class CommentEntity extends BaseEntity {
@@ -19,6 +20,12 @@ export class CommentEntity extends BaseEntity {
   @Column()
   comment: string;
 
-  @ManyToOne((type) => UserEntity, (user) => user.comments, { eager: false })
-  user: UserEntity;
+  @Column()
+  username: string;
+
+  @Column()
+  blogId: number;
+
+  @ManyToOne((type) => BlogEntity, (blog) => blog.comments, { eager: true })
+  blog: BlogEntity;
 }

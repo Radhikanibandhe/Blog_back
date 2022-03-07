@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CommentRepository } from './comment.repository';
 import { CreateCommentDTO } from './dto/comment.create.dto';
 import { UserEntity } from 'src/user/user.entity';
+import { BlogEntity } from './../blog/blog.entity';
 
 @Injectable()
 export class CommentService {
@@ -11,24 +12,16 @@ export class CommentService {
     private commentRepository: CommentRepository,
   ) {}
 
-  async getCommentByUsername(username: string) {
-    const comment = await this.commentRepository.findOne(username);
-    if (!comment) {
-      throw new NotFoundException('comment not found');
-    }
-    return comment;
-  }
-
   async getCommentById(id: string) {
-    const comment = await this.commentRepository.findOne(id);
-    if (!comment) {
-      throw new NotFoundException('comment not found');
-    }
-    return comment;
+    return this.commentRepository.getCommentById(id);
   }
 
-  async createComment(createCommentDto: CreateCommentDTO, user: UserEntity) {
-    return this.commentRepository.createComment(createCommentDto, user);
+  async createComment(
+    createCommentDto: CreateCommentDTO,
+    id: number,
+    user: UserEntity,
+  ) {
+    return this.commentRepository.createComment(createCommentDto, user, id);
   }
 
   async deleteComment(id: string) {
@@ -39,14 +32,12 @@ export class CommentService {
     return comment;
   }
 
-  async updateComment(username: string, createCommentDto: CreateCommentDTO) {
-    const comment = await this.getCommentByUsername(username);
-    comment.comment = createCommentDto.comment;
-    await comment.save();
-    return comment;
-  }
-
-  async getComment() {
-    
+  async updateComment(id: string, createCommentDto: CreateCommentDTO) {
+    const comment = await this.commentRepository.findOne(id);
+    if (comment){
+      comment.comment = createCommentDto.comment;
+      return comment;
+    }
+    return null;
   }
 }

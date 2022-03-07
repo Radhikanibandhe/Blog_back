@@ -10,25 +10,28 @@ import {
   UsePipes,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/user/get.user.decorator';
 import { CommentService } from './comment.service';
-import { UserEntity } from 'src/user/user.entity';
 import { CreateCommentDTO } from './dto/comment.create.dto';
-import { CommentEntity } from './blog.comment.entity';
+import { CommentEntity } from './comment.entity';
 import { GetComment } from './get.comment.decorator';
+import { BlogEntity } from './../blog/blog.entity';
+import { GetBlog } from 'src/blog/get.blog.decorator';
+import { GetUser } from 'src/user/get.user.decorator';
+import { UserEntity } from 'src/user/user.entity';
 
 @Controller('comment')
 @UseGuards(AuthGuard())
 export class CommentController {
   constructor(private commentService: CommentService) {}
 
-  @Post()
+  @Post('/:id')
   @UsePipes()
   createComment(
-    @GetUser() user: UserEntity,
+    @Param('id') id: number,
     @Body() createCommentDto: CreateCommentDTO,
+    @GetUser() user: UserEntity,
   ) {
-    return this.commentService.createComment(createCommentDto, user);
+    return this.commentService.createComment(createCommentDto, id, user);
   }
 
   @UseGuards(AuthGuard())

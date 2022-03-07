@@ -10,7 +10,7 @@ import {
 import { BlogEntity } from './../blog/blog.entity';
 import * as crypto from 'crypto-js';
 import { Gender } from './gender.enum';
-import { CommentEntity } from '../comment/blog.comment.entity';
+import { CommentEntity } from '../comment/comment.entity';
 
 @Entity('User')
 @Unique(['username'])
@@ -44,11 +44,6 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany((type) => BlogEntity, (blog) => blog.user, { eager: true })
   blogs: BlogEntity[];
-
-  @OneToMany((type) => CommentEntity, (comment) => comment.user, {
-    eager: true,
-  })
-  comments: CommentEntity;
 
   validatePassword(password: string) {
     const encrypted = `${crypto.MD5(password)}`;

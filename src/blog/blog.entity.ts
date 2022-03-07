@@ -3,10 +3,12 @@ import {
   Column,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BlogTags } from './blog.enum';
 import { UserEntity } from './../user/user.entity';
+import { CommentEntity } from '../comment/comment.entity';
 
 @Entity('Blog')
 export class BlogEntity extends BaseEntity {
@@ -27,4 +29,9 @@ export class BlogEntity extends BaseEntity {
 
   @Column()
   userId: number;
+
+  @OneToMany((type) => CommentEntity, (comment) => comment.blog, {
+    eager: false,
+  })
+  comments: CommentEntity;
 }
