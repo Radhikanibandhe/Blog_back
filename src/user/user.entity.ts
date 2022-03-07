@@ -10,7 +10,7 @@ import {
 import { BlogEntity } from './../blog/blog.entity';
 import * as crypto from 'crypto-js';
 import { Gender } from './gender.enum';
-import { CommentEntity } from '../comment/blog.comment.entity';
+import { CommentEntity } from '../comment/comment.entity';
 
 @Entity('User')
 @Unique(['username'])

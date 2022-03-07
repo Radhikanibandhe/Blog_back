@@ -20,8 +20,12 @@ export class CommentEntity extends BaseEntity {
   @Column()
   comment: string;
 
+  @Column()
+  username: string;
+
+  @Column()
+  blogId: number;
+
   @ManyToOne((type) => BlogEntity, (blog) => blog.comments, { eager: true })
   blog: BlogEntity;
-
-  
 }

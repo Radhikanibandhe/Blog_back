@@ -38,6 +38,7 @@ export class BlogController {
     return this.blogService.getBlogs(searchBlogDto, user);
   }
 
+
   @Patch('/:id/:tag')
   updateBlogTag(
     @GetUser() user: UserEntity,

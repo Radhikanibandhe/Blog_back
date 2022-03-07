@@ -13,15 +13,15 @@ export class CommentService {
   ) {}
 
   async getCommentById(id: string) {
-    const comment = await this.commentRepository.findOne(id);
-    if (!comment) {
-      throw new NotFoundException('comment not found');
-    }
-    return comment;
+    return this.commentRepository.getCommentById(id);
   }
 
-  async createComment(createCommentDto: CreateCommentDTO, blog: BlogEntity) {
-    return this.commentRepository.createComment(createCommentDto, blog);
+  async createComment(
+    createCommentDto: CreateCommentDTO,
+    id: number,
+    user: UserEntity,
+  ) {
+    return this.commentRepository.createComment(createCommentDto, user, id);
   }
 
   async deleteComment(id: string) {
@@ -33,10 +33,11 @@ export class CommentService {
   }
 
   async updateComment(id: string, createCommentDto: CreateCommentDTO) {
-    const comment = await this.getCommentById(id);
-    comment.comment = createCommentDto.comment;
-    await comment.save();
-    return comment;
+    const comment = await this.commentRepository.findOne(id);
+    if (comment){
+      comment.comment = createCommentDto.comment;
+      return comment;
+    }
+    return null;
   }
-
 }

@@ -5,6 +5,5 @@ export const GetBlog = createParamDecorator((data, obj) => {
     const request = obj.args[0];
     return request.blog;
   }
-
   return null;
 });

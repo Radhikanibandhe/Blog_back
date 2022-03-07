@@ -46,5 +46,4 @@ export class BlogRepository extends Repository<BlogEntity> {
 
     return blog;
   }
-
 }
